@@ -1,7 +1,7 @@
 package academy.kata.task.spring_boot.controller;
 
-import academy.kata.task.spring_boot.dao.UserDAO;
 import academy.kata.task.spring_boot.model.User;
+import academy.kata.task.spring_boot.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 public class UsersController {
 
     @Autowired
-    private UserDAO userdao;
+    private UserService userService;
 
     @GetMapping("/")
     public String start() {
@@ -21,19 +21,19 @@ public class UsersController {
 
     @GetMapping("/users")
     public String showUsers(Model model) {
-        model.addAttribute("users", userdao.getAllUser());
+        model.addAttribute("users", userService.getAllUser());
         return "users/index";
     }
 
     @PostMapping("/users")
     public String createUser(@ModelAttribute("user") User user) {
-        userdao.saveUser(user);
+        userService.saveUser(user);
         return "redirect:/users";
     }
 
     @GetMapping("/users/{id}")
     public String showUsersById(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userdao.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "users/show";
     }
 
@@ -45,19 +45,19 @@ public class UsersController {
 
     @GetMapping("/users/{id}/edit")
     public String editUser(@PathVariable("id") long id, Model model) {
-        model.addAttribute("user", userdao.getUserById(id));
+        model.addAttribute("user", userService.getUserById(id));
         return "users/edit";
     }
 
     @PatchMapping("/users/{id}")
     public String editUser(@ModelAttribute("user") User user, @PathVariable("id") long id) {
-        userdao.editUser(id, user);
+        userService.editUser(id, user);
         return "redirect:/users";
     }
     
     @DeleteMapping("/users/{id}")
     public String deleteUser(@PathVariable("id") long id) {
-        userdao.deleteUser(id);
+        userService.deleteUser(id);
         return "redirect:/users";
     }
 
