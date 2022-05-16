@@ -1,6 +1,7 @@
 package academy.kata.task.spring_boot.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 
 @Entity
 @Table(name = "users")
@@ -18,6 +19,7 @@ public class User{
     private String lastName;
 
     @Column
+    @Min(value = 1, message = "The age must be greater than 0")
     private Byte age;
 
     public User() {

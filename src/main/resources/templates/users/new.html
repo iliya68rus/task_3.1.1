@@ -16,6 +16,7 @@
         <hr>
         <label for="age">Age</label>
         <input type="number" th:field="*{age}" id="age">
+        <div style="color: red" th:if="${#fields.hasErrors('age')}" th:errors="*{age}">age error</div>
         <hr>
         <input type="submit" value="Add User">
     </div>
